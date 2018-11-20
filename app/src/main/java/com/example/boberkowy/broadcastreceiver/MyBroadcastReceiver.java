@@ -25,7 +25,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 Toast.LENGTH_LONG).show();
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        context.
+
         NotificationCompat.Builder  notify = new NotificationCompat.Builder(context,channelId)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle("Dodano nowy produkt")

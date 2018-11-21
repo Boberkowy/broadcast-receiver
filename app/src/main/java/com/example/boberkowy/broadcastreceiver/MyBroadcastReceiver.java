@@ -2,6 +2,7 @@ package com.example.boberkowy.broadcastreceiver;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
@@ -16,19 +17,17 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("RECEIVER", "RECEIEVED MOP");
+        Log.d("RECEIVER", "RECEIEVED INTENT");
 
-        String message = "Broadcast intent detected "
-                + intent.getAction();
+        Intent launchIntent = new Intent("android.intent.action.myaction");
+        launchIntent.setAction("android.intent.action.myaction");
+        launchIntent.addCategory("android.intent.category.DEFAULT");
 
-        Toast.makeText(context, message,
-                Toast.LENGTH_LONG).show();
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder  notify = new NotificationCompat.Builder(context,channelId)
+        NotificationCompat.Builder notify = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Dodano nowy produkt")
+                .setContentTitle("Dodano nowy produkt:")
                 .setContentText(intent.getStringExtra("product_id"))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
@@ -36,6 +35,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
         NotificationManagerCompat nm = NotificationManagerCompat.from(context);
 
-        nm.notify(id++,notify.build());
+        nm.notify(id++, notify.build());
     }
 }
